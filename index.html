@@ -313,7 +313,6 @@
 
       <div class="status" id="fc-status" style="margin-bottom: 8px;">剩餘單字：0</div>
 
-      <!-- 修改：為閃卡點擊事件帶入 event 參數，防止行動裝置選單閃爍 -->
       <div class="flashcard-box" onclick="flipCard(event)">
         <div class="flashcard" id="flashcard">
           <div class="card-front">
@@ -657,6 +656,72 @@ family, n., 家庭；家人"></textarea>
       { en: "take a risk", pos: "phrase", zh: "承擔風險" }
     ];
 
+    // 10. ABC 互動英文 2026.7 Unit 6 (12 題)
+    const datasetABC6 = [
+      { en: "admire", pos: "v.", zh: "欽佩；欣賞" },
+      { en: "magician", pos: "n.", zh: "魔術師" },
+      { en: "musician", pos: "n.", zh: "音樂人" },
+      { en: "alike", pos: "adj.", zh: "相像的" },
+      { en: "colored", pos: "adj.", zh: "有⋯⋯色的" },
+      { en: "stick", pos: "n.", zh: "棒子；棍子" },
+      { en: "usual", pos: "adj.", zh: "平常的；通常的" },
+      { en: "self", pos: "n.", zh: "自我" },
+      { en: "support", pos: "v.", zh: "支持" },
+      { en: "scarf", pos: "n.", zh: "圍巾" },
+      { en: "cheer up", pos: "phrase", zh: "使開心起來；振奮" },
+      { en: "Are you all right?", pos: "phrase", zh: "你還好嗎？" }
+    ];
+
+    // 11. ABC 互動英文 2026.7 Unit 7 (15 題)
+    const datasetABC7 = [
+      { en: "football", pos: "n.", zh: "足球" },
+      { en: "extra", pos: "adv.", zh: "特別地；格外地" },
+      { en: "host", pos: "v./n.", zh: "主辦；主辦方" },
+      { en: "national", pos: "adj.", zh: "國家的" },
+      { en: "first-ever", pos: "adj.", zh: "史上第一次的" },
+      { en: "expect", pos: "v.", zh: "預期" },
+      { en: "broadcast", pos: "n.", zh: "（電視或廣播）轉播" },
+      { en: "hold", pos: "v.", zh: "舉辦" },
+      { en: "concert", pos: "n.", zh: "演唱會" },
+      { en: "viewing", pos: "n.", zh: "觀看" },
+      { en: "interest", pos: "v.", zh: "使感興趣" },
+      { en: "maple", pos: "n.", zh: "楓樹" },
+      { en: "eagle", pos: "n.", zh: "老鷹" },
+      { en: "point", pos: "n.", zh: "頂端" },
+      { en: "cover", pos: "v.", zh: "報導" }
+    ];
+
+    // 12. ABC 互動英文 2026.7 Unit 8 (16 題)
+    const datasetABC8 = [
+      { en: "member", pos: "n.", zh: "成員；會員" },
+      { en: "overseas", pos: "adv.", zh: "在海外；在國外" },
+      { en: "discover", pos: "v.", zh: "發現；找到" },
+      { en: "spirit", pos: "n.", zh: "心態；感受" },
+      { en: "traveler", pos: "n.", zh: "旅人；旅行家" },
+      { en: "pin", pos: "n.", zh: "徽章；別針" },
+      { en: "geography", pos: "n.", zh: "地理" },
+      { en: "adventure", pos: "n.", zh: "冒險" },
+      { en: "envy", pos: "v.", zh: "羨慕" },
+      { en: "friendship", pos: "n.", zh: "友誼" },
+      { en: "form", pos: "v.", zh: "形成；建立" },
+      { en: "helpful", pos: "adj.", zh: "有幫助的" },
+      { en: "stamp", pos: "n.", zh: "郵票" },
+      { en: "connection", pos: "n.", zh: "關係；人脈" },
+      { en: "understanding", pos: "n.", zh: "理解" },
+      { en: "bragging rights", pos: "n.", zh: "誇耀的理由" }
+    ];
+
+    // 13. ABC 互動英文 2026.7 Unit 10 (7 題)
+    const datasetABC10 = [
+      { en: "own", pos: "v.", zh: "擁有" },
+      { en: "fashionable", pos: "adj.", zh: "流行的；時尚的" },
+      { en: "fit", pos: "v.", zh: "合身" },
+      { en: "principle", pos: "n.", zh: "法則；原則" },
+      { en: "outfit", pos: "n.", zh: "穿搭" },
+      { en: "core", pos: "adj.", zh: "核心的；主要的" },
+      { en: "wardrobe", pos: "n.", zh: "全部衣服" }
+    ];
+
     // 寶可夢等級 (Lv 1 到 Lv 25)
     const pokeLevels = [
       { lv: 1, name: "寶可夢蛋", icon: "🥚", title: "初生學徒" },
@@ -851,8 +916,8 @@ family, n., 家庭；家人"></textarea>
     function rescueOldVersions() {
       let rescuedMap = {};
       const possibleKeys = [
-        "multi_dataset_db_v21", "multi_dataset_db_v20", "multi_dataset_db_v19", 
-        "multi_dataset_db_v18", "multi_dataset_db_v17", "multi_dataset_db_v16"
+        "multi_dataset_db_v29", "multi_dataset_db_v28", "multi_dataset_db_v27", 
+        "multi_dataset_db_v26", "multi_dataset_db_v25", "multi_dataset_db_v24"
       ];
 
       for (let k of possibleKeys) {
@@ -870,22 +935,26 @@ family, n., 家庭；家人"></textarea>
     }
 
     function initDB() {
-      const savedDB = localStorage.getItem("multi_dataset_db_v22");
+      const savedDB = localStorage.getItem("multi_dataset_db_v30");
       if (savedDB) {
         try { dbMap = JSON.parse(savedDB); } catch (e) { dbMap = {}; }
       } else {
         dbMap = rescueOldVersions(); 
       }
 
-      // 核心過濾：全徹底強效清理舊快取中的所有異體 Key
       if (dbMap) {
         delete dbMap["Rainbow Time 2020.4"];
         delete dbMap["ABC互動英文 Unit 1-3"];
         delete dbMap["ABC互動英文 Unit 4"];
         delete dbMap["ABC互動英文 Unit 5"];
-        delete dbMap["國一英文第一課"]; // 徹底消除舊版異體字，確保選項不重複
+        delete dbMap["國一英文第一課"];
         delete dbMap["國一英文"];
       }
+
+      dbMap["ABC互動英文 2026.7 Unit 6"] = [...datasetABC6];
+      dbMap["ABC互動英文 2026.7 Unit 7"] = [...datasetABC7];
+      dbMap["ABC互動英文 2026.7 Unit 8"] = [...datasetABC8];
+      dbMap["ABC互動英文 2026.7 Unit 10"] = [...datasetABC10];
 
       const defaults = {
         "國一英語第一課": datasetLesson1,
@@ -896,7 +965,11 @@ family, n., 家庭；家人"></textarea>
         "國一英語第六課": datasetLesson6,
         "ABC互動英文 2026.7 Unit 1-3": datasetABC13,
         "ABC互動英文 2026.7 Unit 4": datasetABC4,
-        "ABC互動英文 2026.7 Unit 5": datasetABC5
+        "ABC互動英文 2026.7 Unit 5": datasetABC5,
+        "ABC互動英文 2026.7 Unit 6": datasetABC6,
+        "ABC互動英文 2026.7 Unit 7": datasetABC7,
+        "ABC互動英文 2026.7 Unit 8": datasetABC8,
+        "ABC互動英文 2026.7 Unit 10": datasetABC10
       };
 
       Object.keys(defaults).forEach(key => {
@@ -911,15 +984,16 @@ family, n., 家庭；家人"></textarea>
     }
 
     function saveDB() {
-      localStorage.setItem("multi_dataset_db_v22", JSON.stringify(dbMap));
+      localStorage.setItem("multi_dataset_db_v30", JSON.stringify(dbMap));
       updateDatasetDropdown();
       changeActiveDataset(activeDatasetKey || 'all');
     }
 
+    // 核心修復：永久獨立持久化紀錄「曾出錯單字」，絕不因初始化被清空
     function loadUnfamiliarSet() {
       const possibleUnfamiliarKeys = [
-        "unfamiliar_words_v22", "unfamiliar_words_v21", "unfamiliar_words_v20", 
-        "unfamiliar_words_v19", "unfamiliar_words_v18"
+        "unfamiliar_words_v30", "unfamiliar_words_v29", "unfamiliar_words_v28", 
+        "unfamiliar_words_v27", "unfamiliar_words_v26"
       ];
       let loadedArr = [];
 
@@ -957,14 +1031,14 @@ family, n., 家庭；家人"></textarea>
           uniqueItems.push(item);
         }
       });
-      localStorage.setItem("unfamiliar_words_v22", JSON.stringify(uniqueItems));
+      localStorage.setItem("unfamiliar_words_v30", JSON.stringify(uniqueItems));
       updateUnfamiliarUI();
     }
 
     function loadMasteredWords() {
       const possibleMasteredKeys = [
-        "mastered_words_v22", "mastered_words_v21", "mastered_words_v20", 
-        "mastered_words_v19", "mastered_words_v18"
+        "mastered_words_v30", "mastered_words_v29", "mastered_words_v28", 
+        "mastered_words_v27", "mastered_words_v26"
       ];
       let loadedArr = [];
 
@@ -986,7 +1060,7 @@ family, n., 家庭；家人"></textarea>
     }
 
     function saveMasteredWords() {
-      localStorage.setItem("mastered_words_v22", JSON.stringify(Array.from(masteredSet)));
+      localStorage.setItem("mastered_words_v30", JSON.stringify(Array.from(masteredSet)));
       updateLevelUI();
     }
 
@@ -1040,13 +1114,12 @@ family, n., 家庭；家人"></textarea>
       }
     }
 
-    // 防護下拉選單：清理、去重、排序一次到位
+    // 動態下拉選單排序（國一英語 1~6 課 ➔ ABC 互動英文 Unit 1~10）
     function updateDatasetDropdown() {
       const selectEl = document.getElementById("dataset-select");
       if (!selectEl) return;
       selectEl.innerHTML = "";
 
-      // 再次動態過濾清理舊快取中的關鍵字
       if (dbMap && dbMap["國一英文第一課"]) {
         delete dbMap["國一英文第一課"];
       }
@@ -1069,6 +1142,10 @@ family, n., 家庭；家人"></textarea>
           if (name.includes("ABC互動英文") && name.includes("Unit 1-3")) return 7;
           if (name.includes("ABC互動英文") && name.includes("Unit 4")) return 8;
           if (name.includes("ABC互動英文") && name.includes("Unit 5")) return 9;
+          if (name.includes("ABC互動英文") && name.includes("Unit 6")) return 10;
+          if (name.includes("ABC互動英文") && name.includes("Unit 7")) return 11;
+          if (name.includes("ABC互動英文") && name.includes("Unit 8")) return 12;
+          if (name.includes("ABC互動英文") && name.includes("Unit 10")) return 13;
           return 99;
         };
         return getPriority(a) - getPriority(b);
@@ -1097,6 +1174,7 @@ family, n., 家庭；家人"></textarea>
       showToast(`已切換題庫至：${newKey === 'all' ? '全部總題庫' : newKey}`);
     }
 
+    // 修復點：移除原本會清空清單的 unfamiliarSet.clear() 指令
     function changeActiveDataset(key) {
       activeDatasetKey = key;
       if (key === 'all') {
@@ -1117,7 +1195,6 @@ family, n., 家庭；家人"></textarea>
         wordList = [];
       }
 
-      unfamiliarSet.clear();
       historyDeckStack = [];
       updateDBBadge();
       initFlashcards();
@@ -1261,6 +1338,7 @@ family, n., 家庭；家人"></textarea>
       }
     }
 
+    // 備份匯出：將「曾出錯單字」完整序列化寫入 JSON 檔
     function exportBackupJSON() {
       const backupData = {
         dbMap: dbMap,
@@ -1268,7 +1346,7 @@ family, n., 家庭；家人"></textarea>
         unfamiliarWords: Array.from(unfamiliarSet),
         activeDatasetKey: activeDatasetKey,
         exportDate: new Date().toISOString(),
-        version: "22.0"
+        version: "30.0"
       };
       const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -1279,9 +1357,10 @@ family, n., 家庭；家人"></textarea>
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast("💾 完整進度備份檔已下載成功！");
+      showToast("💾 完整進度與錯題備份檔已下載成功！");
     }
 
+    // 備份還原：強效還原所有曾出錯單字並覆寫 LocalStorage
     function importBackupJSON(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -1294,7 +1373,7 @@ family, n., 家庭；家人"></textarea>
           if (data.dbMap && typeof data.dbMap === 'object') {
             dbMap = data.dbMap;
             delete dbMap["國一英文第一課"]; 
-            localStorage.setItem("multi_dataset_db_v22", JSON.stringify(dbMap));
+            localStorage.setItem("multi_dataset_db_v30", JSON.stringify(dbMap));
           }
           
           if (data.masteredWords && Array.isArray(data.masteredWords)) {
@@ -1770,7 +1849,6 @@ family, n., 家庭；家人"></textarea>
       document.getElementById("fc-status").textContent = `待複習單字：${currentDeck.length} 個 (${isRandomOrder ? '隨機模式' : '依原順序'})`;
     }
 
-    // 翻轉卡片防冒泡修復
     function flipCard(e) {
       if (e) {
         e.stopPropagation();
